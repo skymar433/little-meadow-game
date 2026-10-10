@@ -11,7 +11,7 @@ advance(r,200000);assert.equal(a.job,null);assert.equal(a.queue!.length,0);asser
 // Mixed crops, including a golden one, award once per patch even after a long gap.
 r.plots[4].golden=true;bulkFarm(r,a,'harvest',200000);assert.equal(a.queue!.length,11);
 assert.throws(()=>farm(r,b,4,200000),/Another helper/);
-advance(r,300000);assert.equal(r.harvested,122);assert.deepEqual(r.village!.stock,{berry:18,carrot:90,flower:14});assert.equal(a.total,20);assert.ok(r.plots.every(p=>!p.ready&&!p.reserved));
+advance(r,300000);assert.equal(r.harvested,122);assert.deepEqual(r.village!.stock,{berry:18,carrot:90,flower:14,wheat:0,tomato:0,corn:0,pumpkin:0,blueberry:0,radish:0,melon:0});assert.equal(a.total,20);assert.ok(r.plots.every(p=>!p.ready&&!p.reserved));
 advance(r,400000);assert.equal(r.harvested,122);assert.throws(()=>bulkFarm(r,a,'harvest',400000),/Nothing/);
 assert.throws(()=>bulkFarm(r,a,'plant',400000,'bad' as never),/seed/);assert.ok(r.plots.every(p=>!p.reserved));
 const v=settleVillage(r,400000);v.stock.carrot=200;villageAction(r,a,'cottage',401000);assert.equal(v.stock.carrot,180);assert.equal(upgradeCost(v,'cottage'),40);villageAction(r,a,'cottage',402000);assert.equal(v.stock.carrot,140);assert.equal(upgradeCost(v,'cottage'),60);

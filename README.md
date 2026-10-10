@@ -1,60 +1,47 @@
-# Little Meadow
+# Little Meadow — expanded village update
 
-A cozy shared multiplayer village by Sky Marcel. Plant berries, carrots, and flowers with friends, build cottages and defenses, and battle grumpy towers with a berry cannon. All visitors join the same persistent village without accounts.
+A cozy shared multiplayer village by Sky Marcel. Everyone tends the same persistent village without accounts or installs.
 
-## Stack
-Next.js App Router, React, TypeScript, original SVG artwork, CSS animation, and Neon Postgres. Clients poll once a second; the server owns crop timers, resource costs, and battles. A database version check prevents concurrent actions from overwriting each other. Each action has a deduplication ID. Browser-local guest tokens restore each player's animal.
+## What's new
+- Ten crops: berries, carrots, flowers, wheat, tomatoes, corn, pumpkins, blueberries, radishes, and golden melons. Seasonal planting, different sale prices, sunshine bonuses, and watering requirements make crop choices matter.
+- Five-level upgrade tracks for cottages, fences, cannons, bakery, greenhouse, market, workshop, personal cottages, plot size, watering cans, tools, and storage barns. Village levels unlock crops and facilities. Existing higher-level saved upgrades are retained.
+- Ten cooking and crafting recipes, shared delivery orders, coins, fishing, rare golden fish, and six decoration spots.
+- Greenhouses accelerate crops 3% per level; bakery and workshop upgrades shorten recipe timers; markets improve earnings.
+- Chickens and cows produce eggs and milk; carrots feed them. Community windmill and bridge projects unlock village benefits. Personal keepsake trades, peaceful neighbor gifts, reputation, and daily goals add cooperative activities.
+- Existing battles, picnics, helpers, walking animals, and shared progress remain.
 
-## Upload to the existing GitHub repository (Windows / VS Code)
-1. Extract this ZIP. Open the folder containing package.json in VS Code.
-2. Open Terminal > New Terminal. Run each command below separately:
+## Update your existing Vercel game
+1. Extract this ZIP into a temporary folder.
+2. Open your EXISTING repository folder in VS Code: C:\Users\skyle\Downloads\Little_Meadow_Vercel\little-meadow-game
+3. Copy the CONTENTS of the extracted little-meadow-game folder into that existing folder and choose Replace when asked. Keep the existing folder, its .git directory, and any .env.local file.
+4. In Terminal > New Terminal, run:
 
 ```powershell
-git init
+git status
 git add .
-git commit -m "Add Little Meadow multiplayer game"
-git branch -M main
-git remote add origin https://github.com/skymar433/little-meadow-game.git
-git push -u origin main
+git commit -m "Expand Little Meadow with crops, cooking and activities"
+git push
 ```
 
-If Git requests login, sign in to GitHub through its browser prompt. If it says the remote already exists, use `git remote set-url origin https://github.com/skymar433/little-meadow-game.git`. If the push is rejected because the remote has a README or other commits, stop and ask for help; do not force push.
+Do not run git init or add a new remote again. If git status does not recognize a repository, open the original folder. Do not force push.
 
-## Deploy to Vercel
-1. In Vercel, import skymar433/little-meadow-game. If it is absent, adjust the Vercel GitHub app's repository access.
-2. Keep the Next.js preset, root directory ./, and default build settings. Name the project little-meadow-game. Deploy.
-3. The UI can deploy before the database is connected, but gameplay will show a connection message until steps 4–7 are complete.
-4. Open the Vercel project's Storage tab, add Neon, select its Free plan, and connect it to this project for Production. A separate Preview database is recommended if enabling Preview deployments. Avoid connecting preview code to your production village.
-5. Confirm the project has the server environment variable DATABASE_URL from that integration. Do not prefix it with NEXT_PUBLIC_. Never paste a database secret into chat or commit it to GitHub.
-6. In the Neon console for this database, open SQL Editor and run the contents of database.sql once. It creates the rooms table and does not delete existing data.
-7. Redeploy the latest Vercel deployment so it receives DATABASE_URL.
-8. Open the production .vercel.app URL in a private window. Confirm you can harvest a ready patch, plant another, and switch tabs. Two browser sessions should see the same crops and storage. No friend is required for this basic check.
-9. Send the new URL to update your portfolio and contest entry. The original Sites game remains online until deliberately removed after the new deployment works.
+Vercel automatically builds the new commit using your existing GitHub connection. Your URL stays https://little-meadow-game.vercel.app/ . Your existing Neon connection and DATABASE_URL stay the same. No new SQL, database, environment variables, or hosting project are required.
 
-## Run locally
-Install Node.js 22.13 or newer, then:
+Expansion data is added to the existing saved JSON state. The original one-time fresh-start marker is unchanged, so an already initialized village is not reset. After Vercel says Ready, refresh the live game. Activities and World should appear next to Garden, Village, and Battle. Check your saved resources and upgrades, then deliver a market order or sell crops.
 
-```powershell
-npm install
-Copy-Item .env.example .env.local
-npm run dev
-```
+## The new loop
+Reach village level 2 or upgrade cottages to unlock wheat, tomatoes, and corn. Seasons rotate every 15 minutes; plants already growing remain harvestable after the season changes. Thirsty crops must be watered before harvesting. Grow crops, deliver orders, and spend shared coins on facilities. The greenhouse unlocks at village level 4. Build one for pumpkins; upgrade it to level 2 for blueberries. Cook in the bakery and craft in the workshop. Finished recipes arrive automatically when the village is next opened. Place crafted decorations under Decorate, then see them in Village. Fishing unlocks at 180 harvest points. Personal cottage upgrades are cosmetic and use shared coins.
 
-Set DATABASE_URL in .env.local to your Neon development database connection string and run database.sql in that database. Open http://localhost:3000. Use a separate development database to avoid changing the live village while testing. Secrets are excluded by .gitignore.
+## Stack and persistence
+Next.js App Router, React, TypeScript, SVG artwork, CSS animation, Neon Postgres. Clients poll once a second. Server actions enforce crop gates, costs, timers, and stock accounting. Database version checks prevent concurrent overwrites; action IDs prevent repeated requests from charging twice. Browser-local guest tokens restore each player's animal.
 
-## Checks
-```powershell
-npm run check
-npm test
-npm run build
-```
+## Local development
+Use Node.js 22.13 or newer. Run npm install, copy .env.example to .env.local, set DATABASE_URL to a separate Neon development database, and run database.sql there. Then run npm run dev. Do not commit secrets or use production credentials for local experiments.
 
-## Fresh start and hosting migration
-This project starts a new village in the newly connected database; existing Sites progress and browser identities are not exported. The one-time fresh-start marker only clears a database state once, then future play stays saved. Images, animal designs, animation, timers, and game rules match the current game. The new hosting setup is independent of ChatGPT Sites.
+## Verification
+Run npm run check, npm test, and npm run build. Ten automated test files cover farming, battles, helpers, picnics, avatars, bulk actions, saved-state compatibility, and expanded activities. Expansion checks include atomic costs, shared station locking, offline completion exactly once, order uniqueness, fishing, decoration placement, upgrade caps, seasonal gates, water requirements, animal production, community projects, escrow trades, and daily rewards.
 
-## Resource roles
-- Berries: cannon ammo (4 per shot) and cannon upgrades.
-- Carrots: cottages and fences.
-- Flowers: healing (5 restores 30 health).
+Type checking, automated tests, and production build passed. Browser visual testing was unavailable in the build environment. This package has not yet been deployed to your Vercel project; check the live update after pushing.
 
-Plants mature in 1–2 minutes. Shared picnics and visible village milestones give the team longer goals. Moss, Pip, and Clover help solo visitors. Everyone can play directly from a browser.
+## Production versus preview
+This ZIP is the real Vercel multiplayer app with the existing Neon backend. It does not include the browser-local preview adapter, sample trade player, demo coins, clock controls, or sandbox reset button. Your live saved progress remains.
