@@ -1,0 +1,5 @@
+import assert from 'node:assert/strict';
+import {createRoom,addPlayer,settleVillage,resetProgressOnce,FRESH_START} from '../lib/game.ts';
+const r=createRoom(1000),p=addPlayer(1000);p.animal=8;p.total=99;r.players.push(p);r.harvested=500;r.village={...settleVillage(r,1000),stock:{berry:200,carrot:300,flower:100},cottages:5,cannon:5,shield:5,hp:0,maxHp:180,wins:9};
+assert.equal(resetProgressOnce(r,2000),true);assert.equal(r.resetEpoch,FRESH_START);assert.deepEqual(r.village!.stock,{berry:0,carrot:0,flower:0});assert.equal(r.village!.hp,100);assert.equal(r.village!.wins,0);assert.equal(r.village!.battle,null);assert.equal(r.village!.cottages,1);assert.equal(r.harvested,0);assert.equal(r.players[0].token,p.token);assert.equal(r.players[0].animal,8);assert.equal(r.players[0].total,0);assert.equal(r.players[0].job,null);
+r.village!.stock.berry=6;assert.equal(resetProgressOnce(r,3000),false);assert.equal(r.village!.stock.berry,6);console.log('One-time fresh start and preserved characters passed.');
