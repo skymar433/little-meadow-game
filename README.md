@@ -45,3 +45,8 @@ Type checking, automated tests, and production build passed. Browser visual test
 
 ## Production versus preview
 This ZIP is the real Vercel multiplayer app with the existing Neon backend. It does not include the browser-local preview adapter, sample trade player, demo coins, clock controls, or sandbox reset button. Your live saved progress remains.
+
+## Level 50 meadow expansion
+Core cottages, fences and cannon, facility buildings, personal cottages and all four upgrade tracks now reach level 50. Existing saves are retained. Village progression reaches level 50. Cottages expand the scrollable neighborhood to 50 visible homes; milestones add decorative landmarks at levels 10, 20, 30, 40 and 50. Home styling, fencing and cannon styling evolve at milestones. Plot upgrades grow the garden to 112 patches. Greenhouse growth has a 35% minimum duration and tending routes a 350ms minimum. Animal family size remains five of each species.
+
+Update your existing GitHub checkout with these files, retain your .git directory and local environment file, then commit and push to main. Your existing Vercel project automatically deploys the update; no SQL changes are required.

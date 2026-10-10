@@ -16,6 +16,6 @@ v.stock.tomato=3;const coins=e.coins;act('sell:tomato');assert.equal(v.stock.tom
 r.harvested=179;assert.throws(()=>townAction(r,a,'fish',t+1000),/180/);r.harvested=180;act('fish');assert.throws(()=>farm(r,a,4,t+1),/fishing/);const fishingEnd=a.fishing!.end;advance(r,fishingEnd);assert.equal(a.fishing,undefined);assert.equal((e.items.fish||0)+(e.items.goldfish||0),1);advance(r,fishingEnd+1000);assert.equal((e.items.fish||0)+(e.items.goldfish||0),1);
 t=fishingEnd+2000;e.items.bench=1;act('place:bench:0');assert.equal(e.items.bench,0);assert.deepEqual(e.decorations,[{slot:0,item:'bench'}]);assert.throws(()=>townAction(r,b,'place:bench:0',t+1),/occupied/);act('move:0:4');assert.equal(e.decorations[0].slot,4);assert.throws(()=>townAction(r,b,'place:arch:9',t+1),/spot/);
 const homeCoins=e.coins;act('home');assert.equal(a.homeLevel,2);assert.equal(b.homeLevel,undefined);assert.equal(e.coins,homeCoins-15);
-e.buildings.bakery=5;assert.throws(()=>townAction(r,b,'building:bakery',t+1000),/Maximum/);
-a.homeLevel=5;assert.throws(()=>townAction(r,a,'home',t+1000),/maximum/);
+e.buildings.bakery=50;assert.throws(()=>townAction(r,b,'building:bakery',t+1000),/Maximum/);
+a.homeLevel=50;assert.throws(()=>townAction(r,a,'home',t+1000),/maximum/);
 console.log('Expanded town checks passed: safe migration, crop gates, atomic costs, shared station locking, offline completion once, order uniqueness, bounded sales, fishing, placement/moving, personal cottages and upgrade caps.');
